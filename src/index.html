@@ -3,31 +3,18 @@
 
 <head>
     <meta charset='utf-8' />
-    <title>Cities: Skylines map generator</title>
+    <title>Heightmap Generator</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css"/>
-
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.js'></script>
     <link rel='stylesheet'  href='https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.css'/>
-
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js"></script>
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css" type="text/css" />
-
-    <!-- Fixed no icons with new Font Awesome key -->
     <script src="https://kit.fontawesome.com/9051d1b58c.js" crossorigin="anonymous"></script>
-    <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> -->
-
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
-
     <link rel="stylesheet" type="text/css" href="styles.css">
-
-	<!-- ANALYTICS SCRIPT -->
-
-	<!-- END OF ANALYTICS SCRIPT -->
-
 </head>
 
 <body class="row">
@@ -56,7 +43,6 @@
             <li><a onclick="zoomOut()" title="Zoom out"><i class="fas fa-search-minus"></i></a></li>
         </ul>
         <ul>
-            <li><a href="https://github.com/sysoppl/cities-heightmap" target="_blank" title="Help"><i class="far fa-question-circle"></i></a></li>
             <li><a href="#" onclick="getHeightmap(255)" title="Dwnload tiles map (Terrain-RGB)"><i class="fas fa-bug"></i></a></li>
         </ul>
     </div>
@@ -82,9 +68,9 @@
                     <header><h4>Size and scale</h4><hr></header>
                     <dl>
                         <dt>Map size:</dt>
-                            <dd><input type="range" data-model="mapSize" min="17.28" max="69.12" step="0.01" id="mapSize"
+                            <dd><input type="range" data-model="mapSize" min="6.65" max="69.12" step="0.01" id="mapSize"
                                 onkeyup="changeMapsize(this)" onmouseup="changeMapsize(this)"></dd>
-                            <dd><input type="number" data-model="mapSize" min="17.28" max="69.12" step="0.01"
+                            <dd><input type="number" data-model="mapSize" min="6.65" max="69.12" step="0.01"
                                 onkeyup="changeMapsize(this)" onmouseup="changeMapsize(this)"></dd>
                             <dd><abbr>km</abbr></dd>
                         <dt>Base level:</dt>
@@ -220,7 +206,7 @@
     <script src="pako.min.js"></script>
     <script src="upng.js"></script>
     <script src='tiles.js'></script>
-    <script src="binding.js"></script> <!-- needs to be loaded before app, for scope var-->
+    <script src="binding.js"></script>
     <script src="app.js"></script>
 </body>
 
