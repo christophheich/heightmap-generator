@@ -408,7 +408,7 @@ function getGrid(lng, lat, size) {
 function loadSettings() {
     let stored = JSON.parse(localStorage.getItem('grid')) || {};
     
-    // San Francisco
+    // Hellkirch, Rhineland-Palatinate, Germany
     stored.lng = parseFloat(stored.lng) || 7.39347;
     stored.lat = parseFloat(stored.lat) || 49.85973;
     
