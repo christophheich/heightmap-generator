@@ -14,10 +14,10 @@ const meanKernel = [
 const sharpenKernel = [ 
     [-0.00391, -0.01563, -0.02344, -0.01563, -0.00391], 
     [-0.01563, -0.06250, -0.09375, -0.06250, -0.01563],
-    [-0.02344, -0.09375, +1.85980, -0.09375, -0.02344], 
+    [-0.02344, -0.09375, +1.85980, -0.09375, -0.02344],
     [-0.01563, -0.06250, -0.09375, -0.06250, -0.01563],
-    [-0.00391, -0.01563, -0.02344, -0.01563, -0.00391] 
-]; 
+    [-0.00391, -0.01563, -0.02344, -0.01563, -0.00391]
+];
 
 var vmapSize = 18.144;
 var mapSize = 6.65;
@@ -98,7 +98,7 @@ map.on('click', function (e) {
 });
 
 map.on('idle', function () {
-    // scope can be set if bindings.js is loaded (because of docReady) 
+    // scope can be set if bindings.js is loaded (because of docReady)
     scope.waterDepth = parseInt(grid.waterDepth) || 50;
     scope.gravityCenter = parseInt(grid.gravityCenter) || 0;
     scope.levelCorrection = parseInt(grid.levelCorrection) || 0;
@@ -407,16 +407,16 @@ function getGrid(lng, lat, size) {
 
 function loadSettings() {
     let stored = JSON.parse(localStorage.getItem('grid')) || {};
-    
+
     // Hellkirch, Rhineland-Palatinate, Germany
     stored.lng = parseFloat(stored.lng) || 7.39347;
     stored.lat = parseFloat(stored.lat) || 49.85973;
-    
+
     stored.zoom = parseFloat(stored.zoom) || 11.0;
-    
+
     stored.minHeight = parseFloat(stored.minHeight) || 0;
     stored.maxHeight = parseFloat(stored.maxHeight) || 0;
-    
+
     stored.heightContours = stored.heightContours || false;
     stored.waterContours = stored.waterContours || false;
 
@@ -443,7 +443,7 @@ function saveSettings() {
     grid.waterDepth = parseInt(document.getElementById('waterDepth').value);
     grid.drawStreams = document.getElementById('drawStrm').checked;
     grid.drawMarker = document.getElementById('drawMarker').checked;
-    
+
     grid.plainsHeight = parseInt(document.getElementById('plainsHeight').value);
     grid.blurPasses = parseInt(document.getElementById('blurPasses').value);
     grid.blurPostPasses = parseInt(document.getElementById('blurPostPasses').value);
@@ -477,7 +477,7 @@ function exportToCSV(mapData) {
         // test for array dimension
         if(Array.isArray(val)) {
             if(isNumber(val[0])) {
-                csvRows.push(val.map(x => x.toLocaleString(undefined)).join('\t')); 
+                csvRows.push(val.map(x => x.toLocaleString(undefined)).join('\t'));
             } else {
                 csvRows.push(val.join('\t'));
             }
@@ -486,7 +486,7 @@ function exportToCSV(mapData) {
                 csvRows.push(val.toLocaleString(undefined));
             } else {
                 csvRows.push(val);
-            }           
+            }
         }
     }
 
@@ -548,10 +548,10 @@ function sanatizeMap(map, xOffset, yOffset) {
     // pass 1: normalize the map, and determine the lowestPositve
     for (let y = yOffset; y < yOffset + citiesmapSize; y++) {
         for (let x = xOffset; x < xOffset + citiesmapSize; x++) {
-            let h = map[y][x]; 
+            let h = map[y][x];
             if(h >= 0 && h < lowestPositve) {
                 lowestPositve = h;
-            }                  
+            }
             sanatizedMap[y - yOffset][x - xOffset] = h;
         }
     }
@@ -561,7 +561,7 @@ function sanatizeMap(map, xOffset, yOffset) {
         for (let x = 0; x < citiesmapSize; x++) {
             let h = sanatizedMap[y][x];
             if(h < 0) {
-                sanatizedMap[y][x] = lowestPositve;                
+                sanatizedMap[y][x] = lowestPositve;
             }
         }
     }
@@ -584,28 +584,28 @@ function sanatizeWatermap(map, xOffset, yOffset) {
 }
 
 function calcMinMaxHeight(map) {
-    const maxY = map.length; 
+    const maxY = map.length;
     const maxX = map[0].length;
 
     const heights = {min: 100000, max: -100000}
 
     for (let y = 0; y < maxY; y++) {
-        for (let x = 0; x < maxX; x++) {            
+        for (let x = 0; x < maxX; x++) {
             let h = map[y][x];
             if (h > heights.max) heights.max = h;
-            if (h < heights.min) heights.min = h;            
+            if (h < heights.min) heights.min = h;
         }
     }
 
     heights.min = heights.min / 10;
     heights.max = heights.max / 10;
-    
+
     return heights;
 }
 
 function updateInfopanel() {
     let rhs = mapSize / mapSize * 100;
-     
+
     document.getElementById('rHeightscale').innerHTML = rhs.toFixed(1);
     document.getElementById('lng').innerHTML = grid.lng.toFixed(5);
     document.getElementById('lat').innerHTML = grid.lat.toFixed(5);
@@ -637,7 +637,7 @@ function setBaseLevel() {
        new Promise((resolve) => {
             getHeightmap(2, resolve);
         }).then(() => {
-            scope.baseLevel = grid.minHeight;            
+            scope.baseLevel = grid.minHeight;
         });
     }
     else {
@@ -651,10 +651,10 @@ function setHeightScale() {
         new Promise((resolve) => {
             getHeightmap(2, resolve);
         }).then(() => {
-            scope.heightScale = Math.min(250, Math.floor((1024 - scope.waterDepth) / (grid.maxHeight - scope.baseLevel) * 100));
+            scope.heightScale = Math.min(50, Math.floor((1024 - scope.waterDepth) / (grid.maxHeight - scope.baseLevel) * 100));
         });
     } else {
-        scope.heightScale = Math.min(250, Math.floor((1024 - scope.waterDepth) / (grid.maxHeight - scope.baseLevel) * 100));
+        scope.heightScale = Math.min(500, Math.floor((1024 - scope.waterDepth) / (grid.maxHeight - scope.baseLevel) * 100));
     }
     saveSettings();
 }
@@ -778,7 +778,7 @@ function getHeightmap(mode = 0, callback) {
 
             let sanatizedMap = sanatizeMap(heightmap, xOffset, yOffset);
 
-            let heights = calcMinMaxHeight(sanatizedMap); 
+            let heights = calcMinMaxHeight(sanatizedMap);
             grid.minHeight = heights.min;
             grid.maxHeight = heights.max;
 
@@ -906,7 +906,7 @@ function autoSettings(withMap = true) {
             getHeightmap(2, resolve);
         }).then(() => {
             scope.baseLevel = grid.minHeight;
-            scope.heightScale = Math.min(250, Math.floor((1024 - scope.waterDepth) / (grid.maxHeight - scope.baseLevel) * 100));            
+            scope.heightScale = Math.min(500, Math.floor((1024 - scope.waterDepth) / (grid.maxHeight - scope.baseLevel) * 100));
         });
     }
 
